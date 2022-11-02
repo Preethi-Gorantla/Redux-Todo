@@ -1,17 +1,20 @@
-import { Fragment, useState,useEffect } from 'react'
+import { Fragment, useState,useEffect,useRef } from 'react'
 import {AiFillPlusCircle} from 'react-icons/ai';
 import {connect} from 'react-redux'
 import '../App.css'
 import {addTodoTask, cmpltdTodo, removeTodo, updateTodo} from '../Redux/Actions';
 import FilterTodo from './FilterTodo';
+import Footer from './Footer';
 
 const Todo = (props) => {
 
     const [task,setTask] = useState("")
     const [todoitems,setTodoItems] = useState([])
+    const activeCount = useRef(0)
+    const cmpltdCount = useRef(0)
 
      console.log("props",props)
-    // console.log("items",todoitems)
+    console.log("items",todoitems)
 
     const handleAddItem = (event) => {
         event.preventDefault()
@@ -23,12 +26,15 @@ const Todo = (props) => {
 
    useEffect(() => {
         setTodoItems(props.todoList)
+        activeCount.current = (props.todoList.filter((item) => item.isCompleted === false)).length
+        cmpltdCount.current = (props.todoList.filter((item) => item.isCompleted === true)).length
     },[props.todoList])
 
 
     const getActive = () => {
         //console.log("Active",props.todoList.filter((item) => item.isCompleted === false))
        setTodoItems(props.todoList.filter((item) => item.isCompleted === false))
+
     }
     const getCmpltd = () => {
         //console.log("getcmpltd",props.todoList.filter((item) => item.isCompleted === true))
@@ -60,12 +66,13 @@ const Todo = (props) => {
                                     updateTask={(obj) => props.updateTask(obj)}>
                         </FilterTodo>)}
             </ul>
+            <Footer className="footer-div2" total={props.todoList.length} act={activeCount.current} cmpltd={cmpltdCount.current}/>
         </Fragment>
     )
 }
-
+ 
 const mapStateToProps = (state) => {
-    //console.log("state",state)
+    console.log("state",state)
     return{
         todoList : state
     }
