@@ -5,6 +5,8 @@ import '../App.css'
 import {addTodoTask, cmpltdTodo, removeTodo, updateTodo} from '../Redux/Actions';
 import FilterTodo from './FilterTodo';
 import Footer from './Footer';
+import Modal from './Modal';
+import {motion} from "framer-motion"
 
 const Todo = (props) => {
 
@@ -12,9 +14,8 @@ const Todo = (props) => {
     const [todoitems,setTodoItems] = useState([])
     const activeCount = useRef(0)
     const cmpltdCount = useRef(0)
-
-     console.log("props",props)
-    console.log("items",todoitems)
+    const [modal,setModal] = useState(false)
+    const taskinput = useRef(false)
 
     const handleAddItem = (event) => {
         event.preventDefault()
@@ -22,6 +23,9 @@ const Todo = (props) => {
             props.addTodo(task)
             setTask("")
         }
+        else{
+            setModal(true)
+        }   
     }
 
    useEffect(() => {
@@ -32,29 +36,65 @@ const Todo = (props) => {
 
 
     const getActive = () => {
-        //console.log("Active",props.todoList.filter((item) => item.isCompleted === false))
        setTodoItems(props.todoList.filter((item) => item.isCompleted === false))
 
     }
     const getCmpltd = () => {
-        //console.log("getcmpltd",props.todoList.filter((item) => item.isCompleted === true))
         setTodoItems(props.todoList.filter((item) => item.isCompleted === true))
     }   
     const getAll = () => {
         setTodoItems(props.todoList)
     }
 
+    const handleRedirect = (val,event) => {
+        if(val){
+            setModal(false)
+            taskinput.current.focus()
+
+        }
+    }
+
     return(
         <Fragment>
+            <motion.h1
+        initial={{ y: -200 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", duration: 0.5 }}
+        whileHover={{ scale: 1.5 }}
+        
+      >  Todo App
+      </motion.h1>
             <div className='todo-container'>
-                <input type="text" className="input" onChange={(event) => setTask(event.target.value)} value={task}/> 
-                <AiFillPlusCircle className='plus-icon' onClick={handleAddItem}/>
+                <motion.input
+                    type="text" 
+                    className="input" 
+                    onChange={(event) => setTask(event.target.value)} 
+                    value={task}
+                    initial={{x:-300}}
+                    animate={{x:0}}
+                    ref={taskinput}
+                />
+                <motion.button
+                        className='plus-icon-btn'
+                        onClick={handleAddItem}
+                        initial={{x:-300}}
+                        animate={{x:0}}
+                        transition={{
+                            type: 'spring',
+                            duration: 2
+                          }}>
+                        <AiFillPlusCircle className='plus-icon'/>
+                </motion.button>
             </div>
-            <div className="button-container">
+            <motion.div 
+                className="button-container"
+                initial={{x:-300}}
+                animate={{x:0}}
+                transition={{type:'spring' ,duration:1}}>
                 <button className='button' onClick={() => getActive()}>Active</button>
                 <button className='button' onClick={() => getCmpltd()}>Completed</button>
                 <button className='button' onClick={() => getAll()}>All</button>
-            </div>
+            </motion.div>
             <ul className='todo-list'>
                 {todoitems.length>0 && 
                     todoitems.map(i => 
@@ -67,12 +107,14 @@ const Todo = (props) => {
                         </FilterTodo>)}
             </ul>
             <Footer className="footer-div2" total={props.todoList.length} act={activeCount.current} cmpltd={cmpltdCount.current}/>
+            <div className=''>
+                {modal && <Modal redirect={handleRedirect}/>}
+            </div>
         </Fragment>
     )
 }
  
 const mapStateToProps = (state) => {
-    console.log("state",state)
     return{
         todoList : state
     }

@@ -45,13 +45,21 @@
   background-color: #e1ebfd;
   border: 2px solid yellow;
 }
-.plus-icon{
+.plus-icon-btn{
+  border-radius: 50px;
   width: 15%;
   height: 10%;
-  margin-left:  8px;
+  background-color: inherit;
+  border: none;
+}
+.plus-icon{
+  width:100%;
+  height:100%;
+  margin: -10px;
   color: #271c6c;
   background-color: white;
   border-radius: 50px;
+  font-size: 20px;
 }
 
 .button-container{
@@ -146,8 +154,28 @@
   position: absolute;
   bottom: 20px;
 }
+.modal{
+  width: 20vw;
+  height: 10vh;
+  background: radial-gradient( circle, hsla(237, 34%, 78%, 0.9) 0%, hsla(219, 88%, 94%, 0.9) 100% );
+  color: #271c6c;
+  padding: 1rem 1.5rem 1.5rem 1rem;
+  border-radius: 10px;
+}
+.back-drop{
+  backdrop-filter: blur(2px);
+  background-size: cover;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
 @media screen and (min-width: 768px){
-  .plus-icon{
+  .plus-icon-btn{
     width: 4%;
     height: 4%;
   }
