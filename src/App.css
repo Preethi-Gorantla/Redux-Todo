@@ -151,16 +151,18 @@
   width: 90vw;
   justify-content: space-around;
   margin-bottom: auto;
-  position: absolute;
+  position: relative;
   bottom: 20px;
 }
 .modal{
-  width: 20vw;
-  height: 10vh;
+  width: 40vw;
+  height: 13vh;
   background: radial-gradient( circle, hsla(237, 34%, 78%, 0.9) 0%, hsla(219, 88%, 94%, 0.9) 100% );
   color: #271c6c;
-  padding: 1rem 1.5rem 1.5rem 1rem;
+  padding: 1rem 1.5rem 2rem 1rem;
   border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 .back-drop{
   backdrop-filter: blur(2px);
@@ -191,5 +193,10 @@
   }
   .footer-div{
     width: 50vw;
+    position: absolute;
+  }
+  .modal{
+    width: 20vw;
+  height: 10vh;
   }
 }

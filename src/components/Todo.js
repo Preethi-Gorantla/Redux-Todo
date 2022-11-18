@@ -95,6 +95,7 @@ const Todo = (props) => {
                 <button className='button' onClick={() => getCmpltd()}>Completed</button>
                 <button className='button' onClick={() => getAll()}>All</button>
             </motion.div>
+            {modal ? <Modal redirect={handleRedirect}/> :
             <ul className='todo-list'>
                 {todoitems.length>0 && 
                     todoitems.map(i => 
@@ -105,11 +106,8 @@ const Todo = (props) => {
                                     item={i}
                                     updateTask={(obj) => props.updateTask(obj)}>
                         </FilterTodo>)}
-            </ul>
-            <Footer className="footer-div2" total={props.todoList.length} act={activeCount.current} cmpltd={cmpltdCount.current}/>
-            <div className=''>
-                {modal && <Modal redirect={handleRedirect}/>}
-            </div>
+            </ul>}
+            {/* <Footer className="footer-div2" total={props.todoList.length} act={activeCount.current} cmpltd={cmpltdCount.current}/> */}
         </Fragment>
     )
 }
